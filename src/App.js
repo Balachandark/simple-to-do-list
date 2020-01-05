@@ -23,10 +23,11 @@ class App extends Component {
       list.push( prevState.itemName );
       return ({
         todoItems: list,
+        itemName: '',
       })
     })
   }
-
+  
   handleKeyDown = (e) => {
     if( e.key === 'Enter' ) {
       this.setState( prevState => {
@@ -34,6 +35,7 @@ class App extends Component {
         list.push( prevState.itemName );
         return ({
           todoItems: list,
+          itemName: '',
         })
       })
     }
@@ -58,6 +60,7 @@ class App extends Component {
           type="text" 
           className="addNewItem" 
           placeholder="Add a new todo list ..." 
+          value={this.state.itemName}
           onKeyDown={this.handleKeyDown} 
           onChange={this.changeHandler}
         />
@@ -73,7 +76,13 @@ class App extends Component {
               return (
                 <li className="list-item" key={index}>
                   <div className="item">{currentItem}</div>
-                  <span type="button" className="close" onClick={ () => this.closeHandler( index )}>×</span>
+                  <span 
+                    type="button" 
+                    className="close" 
+                    onClick={ () => this.closeHandler( index )}
+                    >
+                      ×
+                  </span>
                 </li>
               ) 
             } )
