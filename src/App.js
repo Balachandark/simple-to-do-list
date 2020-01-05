@@ -19,10 +19,10 @@ class App extends Component {
   clickHandler = (e) => {
     console.log( e.target )
     this.setState( prevState => {
-      const prevTodoItems = prevState.todoItems;
-      prevTodoItems.push( prevState.itemName );
+      const list = [...prevState.todoItems];
+      list.push( prevState.itemName );
       return ({
-        todoItems: prevTodoItems,
+        todoItems: list,
       })
     })
   }
@@ -30,19 +30,23 @@ class App extends Component {
   handleKeyDown = (e) => {
     if( e.key === 'Enter' ) {
       this.setState( prevState => {
-        const prevTodoItems = prevState.todoItems;
-        prevTodoItems.push( prevState.itemName );
+        const list = [...prevState.todoItems];
+        list.push( prevState.itemName );
         return ({
-          todoItems: prevTodoItems,
+          todoItems: list,
         })
       })
     }
   }
 
-  closeHandler = (e) => {
-    console.log( e );
-    console.log( e.target );
-    console.log( e.relatedTarget );
+  closeHandler = (index) => {
+    console.log( index )
+    const list = [...this.state.todoItems]
+    list.splice( index, 1 )
+    console.log( list )
+    this.setState({
+      todoItems: list
+    })
   }
 
   render() {
@@ -50,15 +54,26 @@ class App extends Component {
     return (
       <div className="App">
         <h1>To-Do List</h1>
-        <input type="text" className="addNewItem" placeholder="Add a new todo list ..."onKeyDown={this.handleKeyDown} onChange={this.changeHandler}/>
-        <button className="addButton" onClick={this.clickHandler}>Add</button>
+        <input 
+          type="text" 
+          className="addNewItem" 
+          placeholder="Add a new todo list ..." 
+          onKeyDown={this.handleKeyDown} 
+          onChange={this.changeHandler}
+        />
+        <button 
+          className="addButton" 
+          onClick={this.clickHandler}
+        >
+          Add
+        </button>
         <ul className="list-group">
           {
-            todoItems.map( (currentItem, index ) => {
+            todoItems.map( ( currentItem, index ) => {
               return (
                 <li className="list-item" key={index}>
                   <div className="item">{currentItem}</div>
-                  <span type="button" className="close" onClick={this.closeHandler}>×</span>
+                  <span type="button" className="close" onClick={ () => this.closeHandler( index )}>×</span>
                 </li>
               ) 
             } )
