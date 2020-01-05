@@ -17,7 +17,6 @@ class App extends Component {
   }
 
   clickHandler = (e) => {
-    console.log( e.target )
     this.setState( prevState => {
       const list = [...prevState.todoItems];
       list.push( prevState.itemName );
@@ -42,10 +41,8 @@ class App extends Component {
   }
 
   closeHandler = (index) => {
-    console.log( index )
     const list = [...this.state.todoItems]
     list.splice( index, 1 )
-    console.log( list )
     this.setState({
       todoItems: list
     })
